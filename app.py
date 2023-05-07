@@ -435,6 +435,6 @@ if choice=="Modelling":
         if res==[1]:
             st.metric(label="Satisfaction Level :blush::blush::blush::blush::blush:", value="Satisifed ", delta="Happy with the service")
         else:
-            st.metric(label="Satisfaction Level :rage::rage::rage::rage::rage::rage:", value="Not Satisfied ", delta="Unhappy with the service")
+            st.metric(label="Satisfaction Level :rage::rage::rage::rage::rage::rage:", value="Not Satisfied ", delta="-Unhappy with the service",delta_color='normal')
 
 
