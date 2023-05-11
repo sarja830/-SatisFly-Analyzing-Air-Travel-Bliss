@@ -78,21 +78,31 @@ def diabetes_prediction(model_choice,
 
 
 
+df= None
 
+uploaded_file=None
 with st.sidebar:
-    st.image("https://www.onepointltd.com/wp-content/uploads/2020/03/inno2.png")
+    st.image("1602352478948.jpeg")
     st.title("Customer Satisfaction Prediction")
-    choice = st.radio("Navigation", ["Profiling","Modelling", "EDA"])
-    st.info("This project application helps you build and explore your data.")
+    if st.button('New data'):
+        uploaded_file = st.file_uploader("Choose a file")
 
+    if st.button('old data'):
+        uploaded_file=None
+
+    choice = st.radio("Navigation", ["Profiling","Modelling", "EDA"])
 def visualize():
-    df = pd.read_csv("./airline_passenger_satisfaction.csv")
+    if uploaded_file is None:
+        df = pd.read_csv("./airline_passenger_satisfaction.csv")
+    else:
+        df = pd.read_csv(uploaded_file)
     df.head()
     # Analysing categorical variables first
     # ['Gender', 'customer_type', 'type_of_travel', 'customer_class', 'satisfaction']
 
     #  https://dev.to/thalesbruno/subplotting-with-matplotlib-and-seaborn-5ei8
 #line 26
+
     fig, axes = plt.subplots(figsize=(5, 5))
     sns.countplot(x='Gender', data=df, palette='autumn');
     ax = sns.countplot(x='Gender', data=df, hue='satisfaction', palette='viridis')
@@ -301,19 +311,22 @@ def visualize():
 
 
 if choice == "Profiling":
-    df = pd.read_csv("./airline_passenger_satisfaction.csv")
+    if uploaded_file is None:
+        df = pd.read_csv("./airline_passenger_satisfaction.csv")
+    else:
+        df = pd.read_csv(uploaded_file)
     pr = df.profile_report()
     st_profile_report(pr)
 
 if choice == "EDA":
-   visualize()
+    visualize()
 
 if choice=="Modelling":
     # giving a title
     rating = [0,1,2,3,4,5]
     st.title('Airline Passenger satisfaction')
 
-    import streamlit as st
+
 
     col1, col2,col3 = st.columns(3)
 
